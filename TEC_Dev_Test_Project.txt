@@ -1,0 +1,27 @@
+TEC Energy Dev Candidate Project:
+
+Objective:
+
+The objective of this project is to create a software project which when launched will download CSVs from the internet, parse and validate the data contained in the CSVs and then insert it into a relational database.
+
+The CSVs describe the shipment of natural gas. There are CSVs published multiple times a day (each day is divided into cycles). We want all the data from the first 3 days of the month of March 2022 (Mar 1st, 2nd, 3rd).
+
+If you can write code which can fetch data from any set of days, this is a bonus.
+
+If you can write code which tracks what data has already been fetched, and avoids redownloding data, this is also a bonus.
+
+Deliverables:
+
+DDL of a database table(s) where the data will be inserted. (Postgres SQL preferred, but any relational DB is okay)
+The necessary query to insert this data.
+The code to facilitate the downloading, validation, and insert of the data. (C# prefered but feel free to use another language if you want to)
+Instructions on how to run the code.
+
+The deliverables should all be uploaded to a public git repository (like GitHub)
+
+The site where the data is found:
+https://twtransfer.energytransfer.com/ipost/TW/capacity/operationally-available
+
+
+An example url that can be used to download the CSV over HTTP:
+https://twtransfer.energytransfer.com/ipost/capacity/operationally-available?f=csv&extension=csv&asset=TW&gasDay=01%2F24%2F2022&cycle=1&searchType=NOM&searchString=&locType=ALL&locZone=ALL
