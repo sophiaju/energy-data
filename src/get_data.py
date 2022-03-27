@@ -2,15 +2,19 @@ import pandas as pd
 import os
 import argparse
 
-# must be run from the energy_data folder
-
-#data = pd.read_csv('https://twtransfer.energytransfer.com/ipost/capacity/operationally-available?f=csv&extension=csv&asset=TW&gasDay=01%2F24%2F2022&cycle=1&searchType=NOM&searchString=&locType=ALL&locZone=ALL', dtype={'DC':'Int64'})
 
 def get_data_for_day(day, month, year):
-
+    '''
+    downloads data for all cycles of a given day over http
+    day: string like "01"
+    month: string like "03"
+    year: string like "2022"
+    '''
 
     # directory name for that day
     dir_name = os.path.join('data', f'{day}_{month}_{year}')
+    
+    file_names_list = []
 
     # make a directory for that day
     if not os.path.exists(dir_name):
@@ -39,6 +43,7 @@ def get_data_for_day(day, month, year):
 
         file_name = os.path.join(dir_name,f'{cycle}.csv')
 
+
         # check if the file already exists
         if os.path.exists(file_name):
             print("Data has already been downloaded here: ", file_name)
@@ -47,6 +52,10 @@ def get_data_for_day(day, month, year):
         else:
             data.to_csv(file_name, sep='\t', index=False)
             print("Downloaded: ", file_name)
+            file_names_list.append(file_name)
+
+        
+    return file_names_list
 
 def main():
     month = '03'

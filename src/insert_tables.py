@@ -1,10 +1,9 @@
 import psycopg2
 import os
-# from get_data import *
 
 def create_table(cur, conn, dbname, table):
     # check if table already exists
-    cur.execute("SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='OAC_TW')")
+    cur.execute("SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='oac_tw')")
     if bool(cur.fetchone()[0]):
         print(f'{table} table exists, moving on')
     else:
@@ -44,7 +43,14 @@ def insert_csv_to_table(cur, file_name, table):
         next(file)
         cur.copy_from(file, table=table, null='')
 
-def upload_day_to_db(file_name, host = 'localhost', dbname = 'name', user = 'postgres', table = 'oac_tw'): 
+def upload_file_to_db(file_name, host = 'localhost', dbname = 'name', user = 'postgres', table='oac_tw'): 
+    '''
+    loads data from csv into the postgresql database
+    file_name: absolute path to csv with data
+    host: name of database host
+    dbname: name of database
+    user: name of user
+    '''
 
     # connect to the database
     conn = psycopg2.connect(f"host={host} dbname={dbname} user={user}")
@@ -71,7 +77,9 @@ def main():
 
     file_name = "C:/Users/sophi/Documents/TEC/energy-data/data/01_03_2022/evening.csv"
 
-    upload_day_to_db(file_name, host = 'localhost', dbname = 'name', user = 'postgres', table = 'oac_tw')
+    table = 'oac_tw'
+
+    upload_file_to_db(file_name, host = 'localhost', dbname = 'name', user = 'postgres', table = 'oac_tw')
 
 
 if __name__ == '__main__':
