@@ -1,2 +1,2 @@
 
-DROP TABLE test_energy_data;
+DROP TABLE oac_tw;

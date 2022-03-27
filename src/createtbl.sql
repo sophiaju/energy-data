@@ -1,7 +1,7 @@
 
 -- test table
 
-CREATE TABLE test_energy_data
+CREATE TABLE oac_tw
 (
   loc INTEGER, --NOT NULL,
   loc_zn VARCHAR(20),
@@ -17,7 +17,8 @@ CREATE TABLE test_energy_data
   auth_over_ind VARCHAR(1),
   nom_cap VARCHAR(1),
   all_qty_avail VARCHAR(1),
-  qty_reason VARCHAR(30)
-  
-  --PRIMARY KEY(loc)
+  qty_reason VARCHAR(30),
+  day DATE,
+  cycle VARCHAR(10),
+  PRIMARY KEY(loc, loc_purp_desc, day, cycle)
 );
