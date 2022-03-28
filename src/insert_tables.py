@@ -4,9 +4,7 @@ import os
 def create_table(cur, conn, dbname, table):
     # check if table already exists
     cur.execute("SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='oac_tw')")
-    if bool(cur.fetchone()[0]):
-        print(f'{table} table exists, moving on')
-    else:
+    if not bool(cur.fetchone()[0]):
         print(f'Creating {table} table now')
         
         cur.execute("""
@@ -64,8 +62,6 @@ def upload_file_to_db(file_name, host = 'localhost', dbname = 'name', user = 'po
     # upload csv at file_name to desired table in database
     insert_csv_to_table(cur, file_name, table)
 
-    print("Inserted CSV to table")
-
     # commit to database
     conn.commit()
 
@@ -73,14 +69,14 @@ def upload_file_to_db(file_name, host = 'localhost', dbname = 'name', user = 'po
     cur.close()
     conn.close()
 
-def main():
+# def main():
 
-    file_name = "C:/Users/sophi/Documents/TEC/energy-data/data/01_03_2022/evening.csv"
+#     file_name = "C:/Users/sophi/Documents/TEC/energy-data/data/01_03_2022/evening.csv"
 
-    table = 'oac_tw'
+#     table = 'oac_tw'
 
-    upload_file_to_db(file_name, host = 'localhost', dbname = 'name', user = 'postgres', table = 'oac_tw')
+#     upload_file_to_db(file_name, host = 'localhost', dbname = 'name', user = 'postgres', table = 'oac_tw')
 
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()

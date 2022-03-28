@@ -57,14 +57,14 @@ def get_data_for_day(day, month, year):
         
     return file_names_list
 
-def main():
-    month = '03'
+# def main():
+#     month = '03'
 
-    day = '01'
+#     day = '01'
 
-    year = '2022'
+#     year = '2022'
 
-    get_data_for_day(day, month, year)
+#     get_data_for_day(day, month, year)
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
