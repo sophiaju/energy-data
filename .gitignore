@@ -128,6 +128,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# test data
-data/short_data.csv
-data/test_data.csv
+# arc folder
+arc/*
