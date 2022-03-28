@@ -9,31 +9,69 @@ from insert_tables import *
 
 def main():
     '''
-    example command used: python src/extract_and_load.py -d 01 -m 03 -y 2022
+    example command used: python src/extract_and_load.py
     '''
 
-    # take arguments for date
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-d', '--day', required=True, help="day format '01'")
-    parser.add_argument('-m', '--month', required=True, help="month format '01'")
-    parser.add_argument('-y', '--year', required=True, help="year format '01'")
-    args = parser.parse_args()
-    day = str(args.day)
-    month = str(args.month)
-    year = str(args.year)
+    print("This script will use a postgreSQL database \n")
+    print("Enter the database host: ")
+    host = input()
+    print("Enter the database name: ")
+    dbname = input()
+    print("Enter the database user: ")
+    user = input()
+    # print("Enter the table name: ")
+    # table = input()
 
-    # downloads data for all cycles of a given day over http
-    file_names_list = get_data_for_day(day, month, year)
+    # print(host, dbname, user, table)
 
-    # for each file that was just downloaded
-    for file_name in file_names_list:
+    # interactive loop
+    txt = ''
+    while not txt == 'stop':
 
-        abs_path = os.path.abspath(file_name)
-        # print(abs_path)
+        print("Enter the day (DD): ")
+        day = input()
+        print("Enter the month (MM): ")
+        month = input()
+        print("Enter the year (YYYY): ")
+        year = input()
+    
 
-        # insert that file into the database
-        upload_file_to_db(abs_path, host = 'localhost', dbname = 'name', user = 'postgres', table='oac_tw')
-        print(f"Inserted {file_name} into oac_tw table")
+        # downloads data for all cycles of a given day over http
+        try: 
+            file_names_list = get_data_for_day(day, month, year)
+
+        except Exception as err: 
+            print(f"Could not retrieve CSV due to error: {err}")
+            
+        else:
+            # if there was something to download
+            if file_names_list != []:
+
+                print("Insert these CSVs into the database? (Y/N)")
+                
+                insert = input()
+
+                if insert == 'Y':
+
+                    # for each file that was just downloaded
+                    for file_name in file_names_list:
+
+                        abs_path = os.path.abspath(file_name)
+                        # print(abs_path)
+
+                        # insert that file into the database
+                        upload_file_to_db(abs_path, host, dbname, user, table='oac_tw')
+                        print(f"Inserted {file_name} into oac_tw table")
+                else:
+                    print("Did not insert CSVs")
+
+            # if all files have been downloaded, there is nothing to insert 
+            else:
+                print("Nothing to insert")
+
+
+        print("Enter 'stop' if you want to stop, or press 'enter' to repeat for another day: ")
+        txt = input()
 
 
 if __name__ == '__main__':
