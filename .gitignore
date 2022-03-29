@@ -130,4 +130,5 @@ dmypy.json
 
 # arc folder
 arc/*
+!arc/wrong_header.csv
 data/*

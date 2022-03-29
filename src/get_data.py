@@ -34,6 +34,16 @@ def get_data_for_day(day, month, year):
         
         # download data into a dataframe
         data = pd.read_csv(f'https://twtransfer.energytransfer.com/ipost/capacity/operationally-available?f=csv&extension=csv&asset=TW&gasDay={month}%2F{day}%2F{year}&cycle={num}&searchType=NOM&searchString=&locType=ALL&locZone=ALL', dtype={'DC':'Int64'})
+        
+        # wrong header test
+        # data = pd.read_csv("arc/wrong_header.csv", dtype={'DC':'Int64'})
+        # print(list(data))
+
+        # check CSV fields, cancel download if they do not match
+        correct_columns = ['Loc', 'Loc Zn', 'Loc Name', 'Loc Purp Desc', 'Loc/QTI', 'Flow Ind', 'DC', 'OPC', 'TSQ', 'OAC', 'IT', 'Auth Overrun Ind', 'Nom Cap Exceed Ind', 'All Qty Avail', 'Qty Reason']
+        if list(data) != correct_columns:
+            print("Fields do not match, cancelling download")
+            break
 
         # add date and cycle attributes
         data['date'] = f'{year}-{month}-{day}'
@@ -58,11 +68,11 @@ def get_data_for_day(day, month, year):
     return file_names_list
 
 # def main():
-#     month = '03'
+#     month = 'wrong'
 
-#     day = '01'
+#     day = 'header'
 
-#     year = '2022'
+#     year = 'test'
 
 #     get_data_for_day(day, month, year)
 
